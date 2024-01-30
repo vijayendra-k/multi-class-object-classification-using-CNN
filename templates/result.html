@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Object Recognition Result</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+
+        .result-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        img {
+            max-width: 100%;
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .result-info {
+            margin-top: 20px;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        .class-button {
+            padding: 10px;
+            margin-top: 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #ffffff;
+            color: #000; /* Changed text color to black for better visibility */
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .class-button:hover {
+            background-color: #0056b3;
+        }
+
+        .highlight {
+            background-color: black;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Object Detection Result</h1>
+    <div class="result-container">
+        <img src="data:image/jpeg;base64,{{ encoded_image }}" alt="Uploaded Image">
+        <div class="result-info">
+            <p><strong>Class:</strong> {{ result_class }}</p>
+            <p><strong>Confidence:</strong> {{ confidence }}%</p>
+        </div>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            {% for label in class_labels %}
+                <button class="class-button {% if label == result_class %}highlight{% endif %}" name="file" value="{{ label }}" type="submit">{{ label }}</button>
+            {% endfor %}
+        </form>
+    </div>
+</body>
+</html>
